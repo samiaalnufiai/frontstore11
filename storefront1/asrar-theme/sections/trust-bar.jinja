@@ -1,0 +1,63 @@
+<section section-id="{{ sectionId }}" class="asrar-trust-bar">
+  <div class="asrar-container">
+    <div class="asrar-trust-grid">
+
+      {% for item in safeget(settings, 'features', []) %}
+        <div class="asrar-trust-item">
+          {% if item.icon %}
+            <div class="asrar-trust-icon">{{ item.icon | safe }}</div>
+          {% else %}
+            <div class="asrar-trust-icon">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path d="M16 4l2.8 8.6H28l-7.4 5.4 2.8 8.6L16 21.2 8.6 26.6l2.8-8.6L4 12.6h9.2z" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+          {% endif %}
+          <div>
+            <p class="asrar-trust-title">{{ item.title }}</p>
+            <p class="asrar-trust-desc">{{ item.description }}</p>
+          </div>
+        </div>
+      {% else %}
+        {# Fallback defaults #}
+        <div class="asrar-trust-item">
+          <div class="asrar-trust-icon">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M28 8l-16 16-6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p class="asrar-trust-title">{{ settings.feature_1_title | default(_('ملفات رقمية فورية')) }}</p>
+            <p class="asrar-trust-desc">{{ settings.feature_1_desc | default(_('بدون شحن أو انتظار')) }}</p>
+          </div>
+        </div>
+        <div class="asrar-trust-item">
+          <div class="asrar-trust-icon">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="14" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 28c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <p class="asrar-trust-title">{{ settings.feature_2_title | default(_('وصفات مجربة')) }}</p>
+            <p class="asrar-trust-desc">{{ settings.feature_2_desc | default(_('من تجربة وملاحظة')) }}</p>
+          </div>
+        </div>
+        <div class="asrar-trust-item">
+          <div class="asrar-trust-icon">
+            <svg viewBox="0 0 32 32" fill="none"><rect x="6" y="10" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M11 10V8a5 5 0 0110 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <p class="asrar-trust-title">{{ settings.feature_3_title | default(_('خصوصية تامة')) }}</p>
+            <p class="asrar-trust-desc">{{ settings.feature_3_desc | default(_('تحرّكك تبقى وينك')) }}</p>
+          </div>
+        </div>
+        <div class="asrar-trust-item">
+          <div class="asrar-trust-icon">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M4 16c0 6.6 5.4 12 12 12s12-5.4 12-12S22.6 4 16 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 16h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 12l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p class="asrar-trust-title">{{ settings.feature_4_title | default(_('دعم خاص')) }}</p>
+            <p class="asrar-trust-desc">{{ settings.feature_4_desc | default(_('إرشاد ومتابعة')) }}</p>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>

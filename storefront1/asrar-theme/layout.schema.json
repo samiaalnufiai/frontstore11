@@ -1,0 +1,79 @@
+{
+  "name": { "ar": "إعدادات التخطيط", "en": "Layout Settings" },
+  "groups": [
+    {
+      "id": "product_card",
+      "icon": "fa fa-th-large",
+      "name": { "ar": "بطاقة المنتج", "en": "Product Card" },
+      "settings": [
+        {
+          "id": "columns_desktop",
+          "type": "select",
+          "label": { "ar": "عدد الأعمدة (سطح المكتب)", "en": "Columns (Desktop)" },
+          "options": [
+            { "value": "2", "label": { "ar": "2 أعمدة", "en": "2 Columns" } },
+            { "value": "3", "label": { "ar": "3 أعمدة", "en": "3 Columns" } },
+            { "value": "4", "label": { "ar": "4 أعمدة", "en": "4 Columns" } },
+            { "value": "5", "label": { "ar": "5 أعمدة", "en": "5 Columns" } }
+          ],
+          "default": "4"
+        },
+        {
+          "id": "columns_mobile",
+          "type": "select",
+          "label": { "ar": "عدد الأعمدة (موبايل)", "en": "Columns (Mobile)" },
+          "options": [
+            { "value": "1", "label": { "ar": "1 عمود", "en": "1 Column" } },
+            { "value": "2", "label": { "ar": "2 أعمدة", "en": "2 Columns" } }
+          ],
+          "default": "2"
+        },
+        {
+          "id": "image_aspect_ratio",
+          "type": "select",
+          "label": { "ar": "نسبة أبعاد الصورة", "en": "Image Aspect Ratio" },
+          "options": [
+            { "value": "adapt", "label": { "ar": "تكيّف مع الصورة", "en": "Adapt to image" } },
+            { "value": "square", "label": { "ar": "مربع", "en": "Square" } },
+            { "value": "portrait", "label": { "ar": "عمودي", "en": "Portrait" } }
+          ],
+          "default": "adapt"
+        }
+      ]
+    },
+    {
+      "id": "colors",
+      "icon": "fa fa-paint-brush",
+      "name": { "ar": "الألوان", "en": "Colors" },
+      "settings": [
+        { "id": "theme_background", "type": "color", "label": { "ar": "الخلفية الرئيسية", "en": "Main Background" }, "default": "#0D0B0F" },
+        { "id": "theme_background_elevated", "type": "color", "label": { "ar": "خلفية مرتفعة", "en": "Elevated Background" }, "default": "#141118" },
+        { "id": "theme_foreground", "type": "color", "label": { "ar": "لون النص", "en": "Text Color" }, "default": "#F5F0EA" },
+        { "id": "theme_primary", "type": "color", "label": { "ar": "اللون الأساسي", "en": "Primary Color" }, "default": "#F5F0EA" },
+        { "id": "theme_primary_foreground", "type": "color", "label": { "ar": "نص اللون الأساسي", "en": "Primary Foreground" }, "default": "#0D0B0F" },
+        { "id": "theme_muted", "type": "color", "label": { "ar": "لون خفي", "en": "Muted Color" }, "default": "#6B6070" },
+        { "id": "theme_border", "type": "color", "label": { "ar": "لون الحدود", "en": "Border Color" }, "default": "#1F1B28" },
+        { "id": "theme_radius", "type": "range", "label": { "ar": "تقريب الزوايا", "en": "Border Radius" }, "min": 0, "max": 16, "step": 1, "unit": "px", "default": 2 }
+      ]
+    },
+    {
+      "id": "typography",
+      "icon": "fa fa-font",
+      "name": { "ar": "الخطوط", "en": "Typography" },
+      "settings": [
+        {
+          "id": "font_family",
+          "type": "select",
+          "label": { "ar": "الخط الأساسي", "en": "Body Font" },
+          "options": [
+            { "value": "Tajawal", "label": { "ar": "تجوّل (عربي)", "en": "Tajawal (Arabic)" } },
+            { "value": "Almarai", "label": { "ar": "المراعي", "en": "Almarai" } },
+            { "value": "Cairo", "label": { "ar": "القاهرة", "en": "Cairo" } },
+            { "value": "IBM+Plex+Sans+Arabic", "label": { "ar": "IBM عربي", "en": "IBM Plex Arabic" } }
+          ],
+          "default": "Tajawal"
+        }
+      ]
+    }
+  ]
+}

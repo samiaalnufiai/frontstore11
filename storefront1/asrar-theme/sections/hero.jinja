@@ -1,0 +1,87 @@
+{% set mobile_image = image_url(settings.background_image_mobile or settings.background_image, w=960, q=85, f='auto') %}
+{% set desktop_image = image_url(settings.background_image, w=2220, q=90, f='auto') %}
+{% set is_lazy = settings.order > 2 %}
+
+<section
+  section-id="{{ sectionId }}"
+  class="asrar-hero"
+>
+  {# Background Image #}
+  {% if settings.background_image %}
+    <div class="asrar-hero-bg">
+      <picture>
+        <source media="(min-width: 768px)" srcset="{{ desktop_image }}" />
+        <img
+          src="{{ mobile_image }}"
+          alt="{{ settings.heading | default('') }}"
+          class="asrar-hero-bg-img"
+          style="width:100%;height:100%;object-fit:cover;object-position:{{ settings.background_position | default('center') }}"
+          {% if is_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}
+        />
+      </picture>
+      <div class="asrar-hero-overlay"></div>
+    </div>
+  {% else %}
+    {# Fallback gradient background #}
+    <div class="asrar-hero-bg" style="background: radial-gradient(ellipse at 70% 50%, #2A1F3D 0%, #0D0B0F 60%)">
+      <div class="asrar-hero-overlay" style="background: rgba(13,11,15,0.4)"></div>
+    </div>
+  {% endif %}
+
+  <div class="asrar-hero-content">
+    <div class="asrar-hero-inner">
+
+      {% if settings.badge_text and settings.badge_text | trim %}
+        <div class="asrar-hero-eyebrow">{{ settings.badge_text }}</div>
+      {% endif %}
+
+      {% if settings.heading and settings.heading | trim %}
+        {% if settings.is_primary_hero %}
+          <h1 class="asrar-hero-title asrar-fade-up">{{ settings.heading }}</h1>
+        {% else %}
+          <h2 class="asrar-hero-title asrar-fade-up">{{ settings.heading }}</h2>
+        {% endif %}
+      {% endif %}
+
+      {% if settings.description and settings.description | trim %}
+        <p class="asrar-hero-desc asrar-fade-up">{{ settings.description }}</p>
+      {% endif %}
+
+      {% if settings.button_text and settings.button_text | trim %}
+        <div class="asrar-hero-actions asrar-fade-up">
+          <a
+            href="{{ settings.button_url | default(url_for('list_products')) }}"
+            class="asrar-btn asrar-btn-gold asrar-btn-lg"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {{ settings.button_text }}
+          </a>
+          {% if settings.secondary_button_text and settings.secondary_button_text | trim %}
+            <a
+              href="{{ settings.secondary_button_url | default('#') }}"
+              class="asrar-btn asrar-btn-ghost asrar-btn-lg"
+            >
+              {{ settings.secondary_button_text }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  {# prettier-ignore-start #}
+  <style>
+    [section-id="{{ sectionId }}"].asrar-hero {
+      min-height: {{ settings.min_height_mobile | default(700) }}px;
+    }
+    @media (min-width: 768px) {
+      [section-id="{{ sectionId }}"].asrar-hero {
+        min-height: {{ settings.min_height_desktop | default(750) }}px;
+      }
+    }
+  </style>
+  {# prettier-ignore-end #}
+</section>

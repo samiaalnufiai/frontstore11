@@ -1,0 +1,61 @@
+<section section-id="{{ sectionId }}" class="asrar-section" style="background:var(--background-elevated)">
+  <div class="asrar-container">
+    <div class="asrar-split {{ 'md:!grid-cols-[1fr_1.1fr]' if settings.image_position == 'right' else '' }}">
+
+      {# Image #}
+      <div class="asrar-split-img-wrap {{ 'md:order-2' if settings.image_position == 'right' else '' }}">
+        {% if settings.image %}
+          <img
+            src="{{ image_url(settings.image, w=900, q=90, f='auto') }}"
+            alt="{{ settings.heading | default('') }}"
+            class="asrar-split-img"
+            loading="lazy"
+          />
+        {% else %}
+          <div class="asrar-split-img" style="background:var(--background-surface)"></div>
+        {% endif %}
+        {% if settings.badge_text %}
+          <div class="asrar-split-badge">
+            <p class="asrar-split-badge-text">{{ settings.badge_text }}</p>
+          </div>
+        {% endif %}
+      </div>
+
+      {# Content #}
+      <div class="asrar-split-content {{ 'md:order-1' if settings.image_position == 'right' else '' }}">
+        {% if settings.eyebrow %}
+          <p class="asrar-split-eyebrow">{{ settings.eyebrow }}</p>
+        {% endif %}
+        {% if settings.heading %}
+          <h2 class="asrar-split-title">{{ settings.heading }}</h2>
+        {% endif %}
+        {% if settings.description %}
+          <p class="asrar-split-desc">{{ settings.description }}</p>
+        {% endif %}
+        {% if settings.features %}
+          <ul class="asrar-split-features" style="list-style:none;padding:0;margin:0">
+            {% for line in settings.features.split('\n') %}
+              {% if line | trim %}
+                <li class="asrar-split-feature">{{ line | trim }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% if settings.button_text %}
+          <div>
+            <a
+              href="{{ settings.button_url | default(url_for('list_products')) }}"
+              class="asrar-btn asrar-btn-ghost asrar-btn-lg"
+            >
+              {{ settings.button_text }}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="rtl:rotate-180" aria-hidden="true">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>

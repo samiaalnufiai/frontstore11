@@ -1,0 +1,40 @@
+{% set qty_id = id | default('qty-' ~ product_id) %}
+<div class="asrar-qty-wrap">
+  <button
+    class="asrar-qty-btn"
+    data-qty-decrease
+    data-product-id="{{ product_id }}"
+    aria-label="{{ _('Decrease') }}"
+    type="button"
+  >
+    {% if show_delete | default(false) %}
+      <span data-qty-delete-icon>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 3.5h10M5 3.5V2.5h4v1M5.5 6v4M8.5 6v4M3 3.5l.7 8h6.6l.7-8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span data-qty-minus-icon hidden>−</span>
+    {% else %}
+      −
+    {% endif %}
+  </button>
+  <input
+    type="number"
+    id="{{ qty_id }}"
+    value="{{ quantity | default(1) }}"
+    min="1"
+    class="asrar-qty-input"
+    data-qty-input
+    data-product-id="{{ product_id }}"
+    readonly
+  />
+  <button
+    class="asrar-qty-btn"
+    data-qty-increase
+    data-product-id="{{ product_id }}"
+    aria-label="{{ _('Increase') }}"
+    type="button"
+  >
+    +
+  </button>
+</div>

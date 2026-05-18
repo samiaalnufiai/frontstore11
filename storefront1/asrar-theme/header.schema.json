@@ -1,0 +1,43 @@
+{
+  "icon": "fa fa-square",
+  "name": { "ar": "أعلى الصفحة", "en": "Header" },
+  "groups": [
+    {
+      "id": "header",
+      "icon": "fa fa-cog",
+      "name": { "ar": "إعدادات الرأس", "en": "Header Settings" },
+      "settings": [
+        { "id": "hide_language", "type": "checkbox", "label": { "ar": "إخفاء اللغة", "en": "Hide Language" }, "default": false },
+        { "id": "hide_country", "type": "checkbox", "label": { "ar": "إخفاء الدولة", "en": "Hide Country" }, "default": false }
+      ]
+    },
+    {
+      "id": "logo",
+      "icon": "fa fa-image",
+      "name": { "ar": "الشعار", "en": "Logo" },
+      "settings": [
+        {
+          "id": "desktop",
+          "type": "image",
+          "label": { "ar": "شعار سطح المكتب", "en": "Desktop Logo" },
+          "info": { "ar": "220 × 88 بكسل (اختياري)", "en": "220 × 88 pixels (optional)" }
+        },
+        {
+          "id": "mobile",
+          "type": "image",
+          "label": { "ar": "شعار الجوال", "en": "Mobile Logo" },
+          "info": { "ar": "140 × 56 بكسل (اختياري)", "en": "140 × 56 pixels (optional)" }
+        }
+      ]
+    },
+    {
+      "id": "announcement_bar",
+      "icon": "fa fa-bullhorn",
+      "name": { "ar": "شريط الإعلانات", "en": "Announcement Bar" },
+      "settings": [
+        { "id": "display", "type": "checkbox", "label": { "ar": "إظهار الشريط", "en": "Show Bar" }, "default": false },
+        { "id": "text", "type": "text", "label": { "ar": "نص الشريط", "en": "Bar Text" }, "default": "شحن مجاني على الطلبات فوق 200 ريال" }
+      ]
+    }
+  ]
+}

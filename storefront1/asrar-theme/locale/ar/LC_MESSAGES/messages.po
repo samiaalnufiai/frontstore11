@@ -1,0 +1,234 @@
+# Arabic translations for Asrar Al-Einaya Theme
+# Copyright (C) 2025
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Products"
+msgstr "المنتجات"
+
+msgid "Categories"
+msgstr "المجموعات"
+
+msgid "Cart"
+msgstr "السلة"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Profile"
+msgstr "حسابي"
+
+msgid "Search..."
+msgstr "ابحثي..."
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Menu"
+msgstr "القائمة"
+
+msgid "View Cart"
+msgstr "عرض السلة"
+
+msgid "Add to cart"
+msgstr "أضيفي للسلة"
+
+msgid "Select options"
+msgstr "اختاري الخصائص"
+
+msgid "Buy Now"
+msgstr "اشتري الآن"
+
+msgid "Notify me when available"
+msgstr "أبلغيني عند التوفر"
+
+msgid "Add to wishlist"
+msgstr "أضيفي للمفضلة"
+
+msgid "OUT OF STOCK"
+msgstr "غير متوفر"
+
+msgid "Tax free"
+msgstr "معفاة من الضريبة"
+
+msgid "From"
+msgstr "يبدأ من"
+
+msgid "Discount"
+msgstr "خصم"
+
+msgid "Remaining %s only"
+msgstr "المتبقي %s فقط"
+
+msgid "Sold more than %s times"
+msgstr "بيع أكثر من %s مرة"
+
+msgid "You will be notified when this product is back in stock!"
+msgstr "سيتم إبلاغك عند توفر المنتج!"
+
+msgid "Failed to submit. Please try again."
+msgstr "فشل الإرسال. حاولي مرة أخرى."
+
+msgid "Please fill in all required fields"
+msgstr "يرجى ملء جميع الحقول المطلوبة"
+
+msgid "Phone number is required"
+msgstr "رقم الجوال مطلوب"
+
+msgid "Phone number is too short"
+msgstr "رقم الجوال قصير جداً"
+
+msgid "Phone number is too long"
+msgstr "رقم الجوال طويل جداً"
+
+msgid "Invalid phone number"
+msgstr "رقم الجوال غير صحيح"
+
+msgid "Order Summary"
+msgstr "ملخص الطلب"
+
+msgid "Subtotal"
+msgstr "المجموع"
+
+msgid "Shipping"
+msgstr "الشحن"
+
+msgid "Calculated at checkout"
+msgstr "يحسب عند الدفع"
+
+msgid "Coupon"
+msgstr "كوبون"
+
+msgid "Enter coupon code"
+msgstr "أدخلي كود الخصم"
+
+msgid "Apply"
+msgstr "تطبيق"
+
+msgid "Rewards"
+msgstr "نقاط المكافآت"
+
+msgid "For {points} get a discount {percentage}"
+msgstr "مقابل {points} نقطة احصلي على خصم {percentage}"
+
+msgid "Total"
+msgstr "الإجمالي"
+
+msgid "Proceed to Checkout"
+msgstr "إتمام الطلب"
+
+msgid "Shipping & Payment Methods"
+msgstr "طرق الشحن والدفع"
+
+msgid "Your cart is empty"
+msgstr "سلتك فارغة"
+
+msgid "Add some products to get started."
+msgstr "أضيفي بعض المنتجات للبدء."
+
+msgid "Browse Products"
+msgstr "تصفحي المنتجات"
+
+msgid "Browse All"
+msgstr "تصفح الكل"
+
+msgid "No products here yet"
+msgstr "لا يوجد منتجات هنا بعد"
+
+msgid "No products yet"
+msgstr "لا يوجد منتجات بعد"
+
+msgid "No categories yet"
+msgstr "لا يوجد مجموعات بعد"
+
+msgid "All Products"
+msgstr "جميع المنتجات"
+
+msgid "Product Details"
+msgstr "تفاصيل المنتج"
+
+msgid "Reviews"
+msgstr "التقييمات"
+
+msgid "No reviews yet."
+msgstr "لا يوجد تقييمات بعد."
+
+msgid "reviews"
+msgstr "تقييم"
+
+msgid "Breadcrumb"
+msgstr "مسار التصفح"
+
+
+msgid "products"
+msgstr "منتج"
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "Frequently Asked Questions"
+msgstr "الأسئلة الشائعة"
+
+msgid "No FAQs available yet."
+msgstr "لا يوجد أسئلة بعد."
+
+msgid "Blog"
+msgstr "المدونة"
+
+msgid "Read more"
+msgstr "اقرأ أكثر"
+
+msgid "No posts yet."
+msgstr "لا يوجد مقالات بعد."
+
+msgid "Shipping & Payment"
+msgstr "الشحن والدفع"
+
+msgid "Shipping Methods"
+msgstr "طرق الشحن"
+
+msgid "Payment Methods"
+msgstr "طرق الدفع"
+
+msgid "Page Not Found"
+msgstr "الصفحة غير موجودة"
+
+msgid "The page you are looking for does not exist."
+msgstr "الصفحة التي تبحثين عنها غير موجودة."
+
+msgid "Go Home"
+msgstr "العودة للرئيسية"
+
+msgid "Follow us"
+msgstr "تابعينا"
+
+msgid "Contact us"
+msgstr "تواصلي معنا"
+
+msgid "VAT Certificate"
+msgstr "شهادة الضريبة"
+
+msgid "Business Center"
+msgstr "المركز التجاري"
+
+msgid "VAT number:"
+msgstr "الرقم الضريبي:"
+
+msgid "The commercial register number:"
+msgstr "رقم السجل التجاري:"
+
+msgid "Browse"
+msgstr "تصفحي"
+
+msgid "View All"
+msgstr "عرض الكل"

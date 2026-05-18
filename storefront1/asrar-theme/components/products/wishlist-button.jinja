@@ -1,0 +1,25 @@
+<button
+  type="button"
+  class="{{ class | default('asrar-wishlist-btn') }}"
+  data-wishlist-toggle="{{ product_id }}"
+  aria-label="{{ _('Add to wishlist') }}"
+>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      d="M8 13.5S2 9.5 2 5.5a3.5 3.5 0 017-0 3.5 3.5 0 017 0c0 4-6 8-6 8z"
+      stroke="currentColor"
+      stroke-width="1.1"
+      stroke-linejoin="round"
+      data-wishlist-icon-empty
+    />
+    <path
+      d="M8 13.5S2 9.5 2 5.5a3.5 3.5 0 017-0 3.5 3.5 0 017 0c0 4-6 8-6 8z"
+      fill="currentColor"
+      stroke="currentColor"
+      stroke-width="1.1"
+      stroke-linejoin="round"
+      hidden
+      data-wishlist-icon-filled
+    />
+  </svg>
+</button>

@@ -1,0 +1,14 @@
+{
+  "template": "sections/trust-bar.jinja",
+  "name": { "ar": "شريط المميزات", "en": "Features Bar" },
+  "settings": [
+    { "id": "feature_1_title", "type": "text", "label": { "ar": "عنوان الميزة 1", "en": "Feature 1 Title" }, "default": "ملفات رقمية فورية" },
+    { "id": "feature_1_desc", "type": "text", "label": { "ar": "وصف الميزة 1", "en": "Feature 1 Desc" }, "default": "بدون شحن أو انتظار" },
+    { "id": "feature_2_title", "type": "text", "label": { "ar": "عنوان الميزة 2", "en": "Feature 2 Title" }, "default": "وصفات مجربة" },
+    { "id": "feature_2_desc", "type": "text", "label": { "ar": "وصف الميزة 2", "en": "Feature 2 Desc" }, "default": "من تجربة وملاحظة" },
+    { "id": "feature_3_title", "type": "text", "label": { "ar": "عنوان الميزة 3", "en": "Feature 3 Title" }, "default": "خصوصية تامة" },
+    { "id": "feature_3_desc", "type": "text", "label": { "ar": "وصف الميزة 3", "en": "Feature 3 Desc" }, "default": "تحرّكك تبقى وينك" },
+    { "id": "feature_4_title", "type": "text", "label": { "ar": "عنوان الميزة 4", "en": "Feature 4 Title" }, "default": "دعم خاص" },
+    { "id": "feature_4_desc", "type": "text", "label": { "ar": "وصف الميزة 4", "en": "Feature 4 Desc" }, "default": "إرشاد ومتابعة عند الحاجة" }
+  ]
+}

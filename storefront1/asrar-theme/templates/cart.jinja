@@ -1,0 +1,149 @@
+{% extends "layout.jinja" %}
+{% block content %}
+<div class="asrar-cart-layout">
+
+  {# === CART ITEMS COLUMN === #}
+  <div>
+    <h1 class="asrar-cart-title">{{ _('Cart') }}</h1>
+
+    {# Cart Products — rendered by Vitrin #}
+    {% include 'vitrin:v2/cart/products_list.jinja' %}
+
+    {# Empty State (shown when cart is empty via JS) #}
+    <div id="cart-empty-state" hidden class="asrar-empty">
+      <div class="asrar-empty-icon">✦</div>
+      <h2 class="asrar-empty-title">{{ _('Your cart is empty') }}</h2>
+      <p class="asrar-empty-desc">{{ _('Add some products to get started.') }}</p>
+      <a href="{{ url_for('list_products') }}" class="asrar-btn asrar-btn-gold asrar-btn-lg" style="margin-top:1rem">
+        {{ _('Browse Products') }}
+      </a>
+    </div>
+  </div>
+
+  {# === ORDER SUMMARY COLUMN === #}
+  <div>
+    <div class="asrar-cart-summary asrar-glass-card">
+      <h2 class="asrar-cart-summary-title">{{ _('Order Summary') }}</h2>
+
+      {# Subtotal #}
+      <div class="asrar-cart-row">
+        <span>{{ _('Subtotal') }}</span>
+        <span id="cart-subtotal">—</span>
+      </div>
+      <div class="asrar-cart-row">
+        <span>{{ _('Shipping') }}</span>
+        <span style="color:var(--gold)">{{ _('Calculated at checkout') }}</span>
+      </div>
+
+      {# Progressive Discount #}
+      {% include 'vitrin:cart/progressive_discount.jinja' %}
+
+      {# Coupon #}
+      <div>
+        <div class="asrar-divider">{{ _('Coupon') }}</div>
+        <div class="asrar-coupon-wrap" style="margin-top:0.75rem">
+          <input
+            type="text"
+            id="coupon-input"
+            class="asrar-coupon-input"
+            placeholder="{{ _('Enter coupon code') }}"
+          />
+          <button
+            class="asrar-btn asrar-btn-ghost asrar-btn-sm"
+            id="apply-coupon-btn"
+            type="button"
+          >
+            {{ _('Apply') }}
+          </button>
+        </div>
+        <p id="coupon-message" style="font-size:0.75rem;margin-top:0.5rem;display:none"></p>
+      </div>
+
+      {# Loyalty #}
+      {% if store.settings.checkout.is_loyalty_enabled %}
+        <div>
+          <div class="asrar-divider">{{ _('Rewards') }}</div>
+          <div style="margin-top:0.75rem">
+            {% include 'vitrin:v2/cart/loyalty.jinja' %}
+          </div>
+        </div>
+      {% endif %}
+
+      {# Total #}
+      <div class="asrar-cart-row total">
+        <span>{{ _('Total') }}</span>
+        <span class="price" id="cart-total">—</span>
+      </div>
+
+      {# Checkout Button #}
+      <a
+        href="/checkout"
+        class="asrar-btn asrar-btn-gold asrar-btn-full asrar-btn-lg"
+        id="checkout-btn"
+      >
+        {{ _('Proceed to Checkout') }}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="rtl:rotate-180">
+          <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      {# Shipping & Payment Link #}
+      <p style="text-align:center;font-size:0.75rem;color:var(--muted-foreground)">
+        <a href="{{ url_for('shipping_payment') }}" style="color:var(--muted-foreground);text-decoration:underline;text-underline-offset:3px">
+          {{ _('Shipping & Payment Methods') }}
+        </a>
+      </p>
+
+      {# Payment Icons #}
+      {% if store.settings.checkout.payment_methods %}
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border)">
+          {% for pm in store.settings.checkout.payment_methods %}
+            <img
+              src="{{ image_url(pm.icon, w=64, h=40, q=90) }}"
+              alt="{{ pm.name }}"
+              loading="lazy"
+              style="height:1.5rem;width:auto;opacity:0.5;object-fit:contain;border-radius:3px"
+            />
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+{% block footer_scripts %}
+<script>
+  // Cart page bridge — required by Vitrin
+  window.CartPage = {
+    refresh: function() { window.refreshCartPage && window.refreshCartPage(); }
+  };
+  window.cartProductsHtmlChanged = function() {
+    // Update totals after Vitrin re-renders cart
+    const totalEl = document.querySelector('[data-cart-total]');
+    const subtotalEl = document.querySelector('[data-cart-subtotal]');
+    if (totalEl) document.getElementById('cart-total').textContent = totalEl.textContent;
+    if (subtotalEl) document.getElementById('cart-subtotal').textContent = subtotalEl.textContent;
+  };
+  window.toggleBundleItems = function(productId, show) {};
+
+  // Coupon apply
+  document.getElementById('apply-coupon-btn')?.addEventListener('click', async () => {
+    const code = document.getElementById('coupon-input')?.value?.trim();
+    if (!code) return;
+    const btn = document.getElementById('apply-coupon-btn');
+    btn.classList.add('loading');
+    try {
+      await window.zid?.cart?.applyCoupon({ coupon: code });
+      const msg = document.getElementById('coupon-message');
+      if (msg) { msg.textContent = '{{ _("Coupon applied!") }}'; msg.style.display = 'block'; msg.style.color = 'var(--success)'; }
+    } catch (e) {
+      const msg = document.getElementById('coupon-message');
+      if (msg) { msg.textContent = e?.message || '{{ _("Invalid coupon.") }}'; msg.style.display = 'block'; msg.style.color = 'var(--destructive)'; }
+    } finally {
+      btn.classList.remove('loading');
+    }
+  });
+</script>
+{% endblock %}
+{% endblock %}

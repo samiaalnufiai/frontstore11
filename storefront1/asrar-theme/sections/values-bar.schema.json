@@ -1,0 +1,14 @@
+{
+  "template": "sections/values-bar.jinja",
+  "name": { "ar": "شريط القيم", "en": "Values Bar" },
+  "settings": [
+    { "id": "item_1_title", "type": "text", "label": { "ar": "عنوان 1", "en": "Title 1" }, "default": "تحملي ملفك فوراً" },
+    { "id": "item_1_desc", "type": "text", "label": { "ar": "وصف 1", "en": "Desc 1" }, "default": "بمجرد إتمام الطلب" },
+    { "id": "item_2_title", "type": "text", "label": { "ar": "عنوان 2", "en": "Title 2" }, "default": "احتفظي به مدى الحياة" },
+    { "id": "item_2_desc", "type": "text", "label": { "ar": "وصف 2", "en": "Desc 2" }, "default": "وترجعي له وقت ما تحتاجين" },
+    { "id": "item_3_title", "type": "text", "label": { "ar": "عنوان 3", "en": "Title 3" }, "default": "طلّبي على راحتك" },
+    { "id": "item_3_desc", "type": "text", "label": { "ar": "وصف 3", "en": "Desc 3" }, "default": "في وقتك وبأسلوبك" },
+    { "id": "item_4_title", "type": "text", "label": { "ar": "عنوان 4", "en": "Title 4" }, "default": "بنص داك مثل دالما" },
+    { "id": "item_4_desc", "type": "text", "label": { "ar": "وصف 4", "en": "Desc 4" }, "default": "في رحلتك للعناية الحقيقية" }
+  ]
+}

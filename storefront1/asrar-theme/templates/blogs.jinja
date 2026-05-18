@@ -1,0 +1,39 @@
+{% extends "layout.jinja" %}
+{% block content %}
+
+<div style="background:var(--background-elevated);border-bottom:1px solid var(--border);padding:2.5rem 1.25rem 2rem">
+  <div class="asrar-container">
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:400;color:var(--foreground);margin:0">{{ _('Blog') }}</h1>
+  </div>
+</div>
+
+<div class="asrar-section">
+  <div class="asrar-container">
+    {% if blogs and blogs.results %}
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem">
+        {% for post in blogs.results %}
+          <a href="{{ url_for('blog_details', slug=post.slug) }}" style="text-decoration:none;display:block;background:var(--background-elevated);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--gold-border)'" onmouseout="this.style.borderColor='var(--border)'">
+            {% if post.image %}
+              <div style="aspect-ratio:16/9;overflow:hidden">
+                <img src="{{ image_url(post.image, w=600, q=85, f='auto') }}" alt="{{ post.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
+              </div>
+            {% endif %}
+            <div style="padding:1.25rem">
+              <h2 style="font-family:var(--font-display);font-size:1.25rem;font-weight:400;color:var(--foreground);margin:0 0 0.5rem;line-height:1.3">{{ post.title }}</h2>
+              {% if post.excerpt %}
+                <p style="font-size:0.8125rem;color:var(--muted-foreground);line-height:1.65;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ post.excerpt }}</p>
+              {% endif %}
+              <span style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">{{ _('Read more') }} →</span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="asrar-empty">
+        <p class="asrar-empty-desc">{{ _('No posts yet.') }}</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

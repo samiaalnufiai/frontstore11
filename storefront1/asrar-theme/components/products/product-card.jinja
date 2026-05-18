@@ -1,0 +1,116 @@
+{% set aspect_ratio = card_image_aspect_ratio | default('adapt') %}
+{% set aspect_style = '' if aspect_ratio == 'adapt' else ('aspect-ratio:1/1' if aspect_ratio == 'square' else 'aspect-ratio:3/4') %}
+
+<div
+  class="asrar-product-card asrar-fade-up"
+  data-product-card="{{ product.id }}"
+>
+  {# Image #}
+  <div class="asrar-product-image-wrap" style="{{ aspect_style }}">
+    <a href="{{ url_for('product_details', slug=product.slug) }}" tabindex="-1">
+      <img
+        {% if product.main_image and product.main_image.image %}
+          src="{{ product.main_image.image.medium }}"
+        {% elif product.images and product.images|length > 0 %}
+          src="{{ image_url(product.images[0].image.full_size, w=500, q=85, f='auto') }}"
+        {% else %}
+          src="{{ image_url(('images/product-img.svg' | asset_url), w=400, q=100, f='auto') }}"
+        {% endif %}
+        alt="{{ product.name }}"
+        class="asrar-product-img {{ 'h-auto' if aspect_ratio == 'adapt' else 'object-cover' }}"
+        {% set img_idx = index if index is defined else 0 %}
+        {% if img_idx > 3 %}loading="lazy"
+        {% elif img_idx == 0 and is_priority | default(false) %}fetchpriority="high"
+        {% endif %}
+        width="500"
+      />
+    </a>
+
+    {# Badges #}
+    <div class="asrar-product-badges">
+      {% if product.badge %}
+        <span class="asrar-badge asrar-badge-gold">{{ product.badge }}</span>
+      {% endif %}
+      {% if product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+        <span class="asrar-badge asrar-badge-muted">{{ _('OUT OF STOCK') }}</span>
+      {% endif %}
+      {% if product.is_taxable == false %}
+        <span class="asrar-badge asrar-badge-muted">{{ _('Tax free') }}</span>
+      {% endif %}
+      <span class="bundle-offer-badge hidden" data-bundle-offer-product-id="{{ product.id }}"></span>
+    </div>
+
+    {# Wishlist #}
+    {% with product_id=product.id, class='asrar-wishlist-btn' %}
+      {% include 'components/products/wishlist-button.jinja' %}
+    {% endwith %}
+  </div>
+
+  {# Info #}
+  <div class="asrar-product-info">
+    {# Rating #}
+    {% if store.settings.products.reviews_enabled and product.rating and product.rating.total_count > 0 %}
+      <div class="asrar-product-rating">
+        <span class="asrar-star">★</span>
+        <span>{{ product.rating.average }}</span>
+        <span style="opacity:0.5">({{ product.rating.total_count }})</span>
+      </div>
+    {% endif %}
+
+    {# Name #}
+    <h3 style="margin:0">
+      <a href="{{ url_for('product_details', slug=product.slug) }}" class="asrar-product-name">
+        {{ product.name }}
+      </a>
+    </h3>
+
+    {# Price #}
+    {% if product.formatted_sale_price is not none %}
+      <div>
+        <span class="asrar-product-price">
+          {% if product.has_options %}{{ _('From') }} {% endif %}
+          {{ product.formatted_sale_price }}
+        </span>
+        <span class="asrar-product-old-price">{{ product.formatted_price }}</span>
+        {% if product.discount_percentage and product.discount_percentage > 0 %}
+          <span class="asrar-product-discount" style="display:block;margin-top:0.25rem">
+            {{ _('Discount') }} {{ product.discount_percentage }}%
+          </span>
+        {% endif %}
+      </div>
+    {% else %}
+      <p class="asrar-product-price" style="margin:0">
+        {% if product.has_options %}{{ _('From') }} {% endif %}
+        {{ product.formatted_price }}
+      </p>
+    {% endif %}
+  </div>
+
+  {# Actions #}
+  <div class="asrar-product-actions">
+    {% set is_out_of_stock = product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+    {% if is_out_of_stock %}
+      <button class="asrar-btn asrar-btn-ghost" data-notify-me-trigger="{{ product.id }}" style="width:100%">
+        {{ _('Notify me when available') }}
+      </button>
+    {% else %}
+      {% set has_options = product.has_options or product.has_fields %}
+      <button
+        class="asrar-btn asrar-btn-ghost"
+        {% if has_options %}
+          data-open-quick-view="true" data-product-id="{{ product.id }}"
+        {% else %}
+          data-add-to-cart="{{ product.id }}"
+        {% endif %}
+        style="width:100%"
+      >
+        {{ _('Select options') if has_options else _('Add to cart') }}
+      </button>
+      <div style="width:100%" data-quantity-section hidden>
+        {% with id='card-qty-' ~ product.id, product_id=product.id, quantity=1, show_delete=true, full_width=true %}
+          {% include 'components/ui/quantity-input.jinja' %}
+        {% endwith %}
+      </div>
+    {% endif %}
+  </div>
+</div>

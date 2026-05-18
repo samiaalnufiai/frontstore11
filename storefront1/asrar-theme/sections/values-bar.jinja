@@ -1,0 +1,32 @@
+<section section-id="{{ sectionId }}" class="asrar-values-bar">
+  <div class="asrar-values-grid">
+    {% for item in safeget(settings, 'items', []) %}
+      <div class="asrar-value-item">
+        <span class="asrar-value-icon">{{ item.icon | default('✦') | safe }}</span>
+        <span class="asrar-value-title">{{ item.title }}</span>
+        <span class="asrar-value-desc">{{ item.description }}</span>
+      </div>
+    {% else %}
+      <div class="asrar-value-item">
+        <span class="asrar-value-icon">⬇</span>
+        <span class="asrar-value-title">{{ settings.item_1_title | default(_('تحملي ملفك فوراً')) }}</span>
+        <span class="asrar-value-desc">{{ settings.item_1_desc | default(_('بمجرد إتمام الطلب')) }}</span>
+      </div>
+      <div class="asrar-value-item">
+        <span class="asrar-value-icon">∞</span>
+        <span class="asrar-value-title">{{ settings.item_2_title | default(_('احتفظي به مدى الحياة')) }}</span>
+        <span class="asrar-value-desc">{{ settings.item_2_desc | default(_('وترجعي له وقت ما تحتاجين')) }}</span>
+      </div>
+      <div class="asrar-value-item">
+        <span class="asrar-value-icon">◷</span>
+        <span class="asrar-value-title">{{ settings.item_3_title | default(_('طلّبي على راحتك')) }}</span>
+        <span class="asrar-value-desc">{{ settings.item_3_desc | default(_('في وقتك وبأسلوبك')) }}</span>
+      </div>
+      <div class="asrar-value-item">
+        <span class="asrar-value-icon">♡</span>
+        <span class="asrar-value-title">{{ settings.item_4_title | default(_('بنص داك مثل دالما')) }}</span>
+        <span class="asrar-value-desc">{{ settings.item_4_desc | default(_('في رحلتك للعناية الحقيقية')) }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>

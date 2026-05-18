@@ -1,0 +1,60 @@
+{% extends "layout.jinja" %}
+{% block content %}
+
+{# Hero #}
+<div style="background:var(--background-elevated);border-bottom:1px solid var(--border);padding:3rem 1.25rem 2.5rem">
+  <div class="asrar-container">
+    {# Breadcrumb #}
+    <nav class="asrar-breadcrumb" style="margin-bottom:1.25rem">
+      <a href="{{ url_for('home') }}">{{ _('Home') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      <a href="{{ url_for('list_categories') }}">{{ _('Categories') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      <span>{{ category.name }}</span>
+    </nav>
+    {% if category.image %}
+      <div style="width:3.5rem;height:3.5rem;border-radius:50%;overflow:hidden;border:1px solid var(--gold-border);margin-bottom:1rem">
+        <img src="{{ image_url(category.image, w=100, q=90, f='auto') }}" alt="{{ category.name }}" style="width:100%;height:100%;object-fit:cover" />
+      </div>
+    {% endif %}
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.75rem);font-weight:400;color:var(--foreground);margin:0 0 0.625rem">{{ category.name }}</h1>
+    {% if category.description %}
+      <p style="font-size:0.9rem;color:var(--muted-foreground);max-width:600px;line-height:1.7">{{ category.description | safe }}</p>
+    {% endif %}
+  </div>
+</div>
+
+{# Products #}
+<div class="asrar-section">
+  <div class="asrar-container">
+    {% if products and products.results %}
+      <div class="asrar-products-grid">
+        {% for product in products.results %}
+          {% with index=loop.index0, is_priority=loop.first %}
+            {% include 'components/products/product-card.jinja' %}
+          {% endwith %}
+        {% endfor %}
+      </div>
+
+      {# Pagination #}
+      {% if products.next or products.previous %}
+        <div style="display:flex;justify-content:center;gap:1rem;margin-top:3rem">
+          {% if products.previous %}
+            <a href="{{ products.previous }}" class="asrar-btn asrar-btn-ghost">← {{ _('Previous') }}</a>
+          {% endif %}
+          {% if products.next %}
+            <a href="{{ products.next }}" class="asrar-btn asrar-btn-ghost">{{ _('Next') }} →</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="asrar-empty">
+        <div class="asrar-empty-icon">✦</div>
+        <h2 class="asrar-empty-title">{{ _('No products here yet') }}</h2>
+        <a href="{{ url_for('list_products') }}" class="asrar-btn asrar-btn-gold" style="margin-top:1rem">{{ _('Browse All') }}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

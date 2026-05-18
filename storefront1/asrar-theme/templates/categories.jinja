@@ -1,0 +1,50 @@
+{% extends "layout.jinja" %}
+{% block content %}
+
+<div style="background:var(--background-elevated);border-bottom:1px solid var(--border);padding:2.5rem 1.25rem 2rem">
+  <div class="asrar-container">
+    <nav class="asrar-breadcrumb" style="margin-bottom:1rem">
+      <a href="{{ url_for('home') }}">{{ _('Home') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      <span>{{ _('Categories') }}</span>
+    </nav>
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:400;color:var(--foreground);margin:0">{{ _('Categories') }}</h1>
+  </div>
+</div>
+
+<div class="asrar-section">
+  <div class="asrar-container">
+    {% if categories and categories.results %}
+      <div class="asrar-categories-grid">
+        {% for cat in categories.results %}
+          <a href="{{ url_for('category_details', category_id=cat.id, slug=cat.slug) }}" class="asrar-category-card">
+            {% if cat.image %}
+              <img
+                src="{{ image_url(cat.image_full_size, w=500, q=85, f='auto') }}"
+                alt="{{ cat.name }}"
+                class="asrar-category-img"
+                loading="{{ 'lazy' if not loop.first }}"
+              />
+            {% else %}
+              <div class="asrar-category-img" style="background:var(--background-surface)"></div>
+            {% endif %}
+            <div class="asrar-category-overlay"></div>
+            <div class="asrar-category-content">
+              <span class="asrar-category-name">{{ cat.name }}</span>
+              {% if cat.products_count %}
+                <span class="asrar-category-desc">{{ cat.products_count }} {{ _('products') }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="asrar-empty">
+        <div class="asrar-empty-icon">✦</div>
+        <h2 class="asrar-empty-title">{{ _('No categories yet') }}</h2>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

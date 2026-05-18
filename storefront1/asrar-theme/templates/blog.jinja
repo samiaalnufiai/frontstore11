@@ -1,0 +1,34 @@
+{% extends "layout.jinja" %}
+{% block content %}
+
+<div style="background:var(--background-elevated);border-bottom:1px solid var(--border);padding:2.5rem 1.25rem 2rem">
+  <div class="asrar-container" style="max-width:760px;margin-inline:auto">
+    <nav class="asrar-breadcrumb" style="margin-bottom:1rem">
+      <a href="{{ url_for('home') }}">{{ _('Home') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      <a href="{{ url_for('blogs') }}">{{ _('Blog') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      <span>{{ blog.title }}</span>
+    </nav>
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.75rem);font-weight:400;color:var(--foreground);margin:0 0 0.75rem">{{ blog.title }}</h1>
+    {% if blog.created_at %}
+      <p style="font-size:0.8rem;color:var(--muted)">{{ blog.created_at }}</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if blog.image %}
+  <div style="width:100%;max-height:480px;overflow:hidden;border-bottom:1px solid var(--border)">
+    <img src="{{ image_url(blog.image, w=1400, q=85, f='auto') }}" alt="{{ blog.title }}" style="width:100%;object-fit:cover;max-height:480px" loading="lazy"/>
+  </div>
+{% endif %}
+
+<div class="asrar-section">
+  <div class="asrar-container" style="max-width:760px;margin-inline:auto">
+    <div style="font-size:0.9375rem;line-height:1.9;color:var(--muted-foreground)">
+      {{ blog.content | safe }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

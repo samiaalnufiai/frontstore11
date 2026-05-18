@@ -1,0 +1,293 @@
+{% extends "layout.jinja" %}
+{% block content %}
+<div class="asrar-product-detail">
+
+  {# === GALLERY === #}
+  <div class="asrar-gallery" id="product-gallery">
+
+    {# Main Image #}
+    <div class="asrar-gallery-main" id="gallery-main">
+      {% if product.main_image and product.main_image.image %}
+        <img
+          id="gallery-main-img"
+          src="{{ image_url(product.main_image.image.full_size, w=900, q=90, f='auto') }}"
+          alt="{{ product.name }}"
+          fetchpriority="high"
+          style="width:100%;height:100%;object-fit:cover"
+        />
+      {% elif product.images and product.images|length > 0 %}
+        <img
+          id="gallery-main-img"
+          src="{{ image_url(product.images[0].image.full_size, w=900, q=90, f='auto') }}"
+          alt="{{ product.name }}"
+          fetchpriority="high"
+          style="width:100%;height:100%;object-fit:cover"
+        />
+      {% else %}
+        <img
+          id="gallery-main-img"
+          src="{{ image_url(('images/product-img.svg' | asset_url), w=600, q=100, f='auto') }}"
+          alt="{{ product.name }}"
+          style="width:100%;height:100%;object-fit:contain;padding:2rem"
+        />
+      {% endif %}
+    </div>
+
+    {# Thumbnails #}
+    {% if product.images and product.images|length > 1 %}
+      <div class="asrar-gallery-thumbs">
+        {% for img in product.images %}
+          <div
+            class="asrar-gallery-thumb {{ 'active' if loop.first }}"
+            onclick="
+              document.getElementById('gallery-main-img').src='{{ image_url(img.image.full_size, w=900, q=90, f='auto') }}';
+              document.querySelectorAll('.asrar-gallery-thumb').forEach(t=>t.classList.remove('active'));
+              this.classList.add('active');
+            "
+          >
+            <img
+              src="{{ image_url(img.image.full_size, w=120, q=80, f='auto') }}"
+              alt="{{ product.name }}"
+              loading="lazy"
+              style="width:100%;height:100%;object-fit:cover"
+            />
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  {# === PRODUCT INFO === #}
+  <div class="asrar-product-summary">
+
+    {# Breadcrumb #}
+    <nav class="asrar-product-breadcrumb" aria-label="{{ _('Breadcrumb') }}">
+      <a href="{{ url_for('home') }}">{{ _('Home') }}</a>
+      <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      {% for cat in product.categories[:1] %}
+        <a href="{{ url_for('category_details', category_id=cat.id, slug=cat.slug) }}">{{ cat.name }}</a>
+        <span class="asrar-breadcrumb-sep rtl:rotate-180">›</span>
+      {% endfor %}
+      <span>{{ product.name }}</span>
+    </nav>
+
+    {# Name #}
+    <h1 class="asrar-product-summary-title">{{ product.name }}</h1>
+
+    {# Rating #}
+    {% if store.settings.products.reviews_enabled and product.rating and product.rating.total_count > 0 %}
+      <div class="asrar-product-rating">
+        {% for i in range(5) %}
+          <span class="{{ 'asrar-star' if i < product.rating.average|int else '' }}" style="{{ '' if i < product.rating.average|int else 'opacity:0.3' }}">★</span>
+        {% endfor %}
+        <span style="font-size:0.8rem;color:var(--muted-foreground);margin-inline-start:0.5rem">({{ product.rating.total_count }} {{ _('reviews') }})</span>
+      </div>
+    {% endif %}
+
+    {# Price #}
+    <div>
+      {% if product.formatted_sale_price is not none %}
+        <span class="asrar-product-summary-price">
+          {% if product.has_options %}{{ _('From') }} {% endif %}
+          {{ product.formatted_sale_price }}
+          <span class="asrar-product-old-price">{{ product.formatted_price }}</span>
+        </span>
+        {% if product.discount_percentage and product.discount_percentage > 0 %}
+          <div style="margin-top:0.5rem">
+            <span class="asrar-product-discount">{{ _('Discount') }} {{ product.discount_percentage }}%</span>
+          </div>
+        {% endif %}
+      {% else %}
+        <span class="asrar-product-summary-price">
+          {% if product.has_options %}{{ _('From') }} {% endif %}
+          {{ product.formatted_price }}
+        </span>
+      {% endif %}
+    </div>
+
+    {# Short Description #}
+    {% if product.short_description %}
+      <div class="asrar-product-summary-desc">{{ product.short_description | safe }}</div>
+    {% endif %}
+
+    {# Options + Add to Cart #}
+    <div class="asrar-product-add-section">
+
+      {# Product Options (Vitrin handles variant rendering) #}
+      {% if product.has_options %}
+        <form id="product-form-{{ product.id }}">
+          <input type="hidden" name="product_id" value="{{ product.id }}" />
+          {% include 'vitrin:v2/products/options/variant_options.jinja' %}
+
+          {# Custom fields #}
+          {% if product.has_fields %}
+            <div style="margin-top:1rem">
+              {% for field in product.fields %}
+                <div style="margin-bottom:0.875rem">
+                  <label style="display:block;font-size:0.8rem;color:var(--muted-foreground);margin-bottom:0.375rem;letter-spacing:0.05em;text-transform:uppercase">
+                    {{ field.name }}{% if field.required %} *{% endif %}
+                  </label>
+                  {% if field.type == 'text' %}
+                    <input
+                      type="text"
+                      name="fields[{{ field.id }}]"
+                      class="asrar-coupon-input"
+                      {% if field.required %}required{% endif %}
+                      style="width:100%"
+                    />
+                  {% elif field.type == 'textarea' %}
+                    <textarea
+                      name="fields[{{ field.id }}]"
+                      class="asrar-coupon-input"
+                      rows="3"
+                      {% if field.required %}required{% endif %}
+                      style="width:100%;resize:vertical"
+                    ></textarea>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {# Actions #}
+          {% set is_out_of_stock = product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+          {% if is_out_of_stock %}
+            <button class="asrar-btn asrar-btn-ghost asrar-btn-full" data-notify-me-trigger="{{ product.id }}" type="button">
+              {{ _('Notify me when available') }}
+            </button>
+          {% else %}
+            <div style="display:flex;flex-direction:column;gap:0.75rem">
+              <div style="display:none" data-quantity-section>
+                {% with id='detail-qty-' ~ product.id, product_id=product.id, quantity=1, show_delete=false %}
+                  {% include 'components/ui/quantity-input.jinja' %}
+                {% endwith %}
+              </div>
+              <button
+                class="asrar-btn asrar-btn-gold asrar-btn-full asrar-btn-lg"
+                data-add-to-cart-form="product-form-{{ product.id }}"
+                type="button"
+              >
+                {{ _('Add to cart') }}
+              </button>
+              <button
+                class="asrar-btn asrar-btn-ghost asrar-btn-full asrar-btn-lg"
+                data-buy-now-form="product-form-{{ product.id }}"
+                type="button"
+              >
+                {{ _('Buy Now') }}
+              </button>
+            </div>
+          {% endif %}
+        </form>
+      {% else %}
+        {# No options #}
+        {% set is_out_of_stock = product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+        {% if is_out_of_stock %}
+          <button class="asrar-btn asrar-btn-ghost asrar-btn-full" data-notify-me-trigger="{{ product.id }}" type="button">
+            {{ _('Notify me when available') }}
+          </button>
+        {% else %}
+          <div style="display:flex;flex-direction:column;gap:0.75rem">
+            <div style="display:none" data-quantity-section>
+              {% with id='detail-qty-' ~ product.id, product_id=product.id, quantity=1, show_delete=false %}
+                {% include 'components/ui/quantity-input.jinja' %}
+              {% endwith %}
+            </div>
+            <button
+              class="asrar-btn asrar-btn-gold asrar-btn-full asrar-btn-lg"
+              data-add-to-cart="{{ product.id }}"
+              type="button"
+            >
+              {{ _('Add to cart') }}
+            </button>
+            <button
+              class="asrar-btn asrar-btn-ghost asrar-btn-full asrar-btn-lg"
+              data-buy-now="{{ product.id }}"
+              type="button"
+            >
+              {{ _('Buy Now') }}
+            </button>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {# Wishlist #}
+      <div style="display:flex;justify-content:center">
+        {% with product_id=product.id %}
+          {% include 'components/products/wishlist-button.jinja' %}
+        {% endwith %}
+        <span style="font-size:0.8rem;color:var(--muted-foreground);margin-inline-start:0.5rem;align-self:center">{{ _('Add to wishlist') }}</span>
+      </div>
+
+      {# Low stock #}
+      {% if store.settings.products.low_stock_enabled and product.is_infinite == false and product.quantity is not none and product.quantity > 0 and product.quantity <= store.settings.products.low_stock_threshold | default(5) %}
+        <p style="font-size:0.8rem;color:var(--gold);text-align:center">
+          {{ _('Remaining %s only') % product.quantity }}
+        </p>
+      {% endif %}
+
+    </div>
+
+    {# Meta — SKU, Categories #}
+    <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:0.8rem;color:var(--muted-foreground);border-top:1px solid var(--border);padding-top:1.25rem">
+      {% if product.categories %}
+        <div>
+          <span>{{ _('Categories') }}: </span>
+          {% for cat in product.categories %}
+            <a href="{{ url_for('category_details', category_id=cat.id, slug=cat.slug) }}" style="color:var(--gold);text-decoration:none">{{ cat.name }}</a>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if store.settings.general.tax_settings.tax_number %}
+        <div style="color:var(--muted)">{{ _('VAT number:') }} {{ store.settings.general.tax_settings.tax_number }}</div>
+      {% endif %}
+    </div>
+
+    {# Bundle Offers #}
+    {% include 'vitrin:cart/progressive_discount.jinja' %}
+
+  </div>
+</div>
+
+{# Full Description #}
+{% if product.description %}
+  <div class="asrar-section" style="border-top:1px solid var(--border);background:var(--background-elevated)">
+    <div class="asrar-container" style="max-width:800px;margin-inline:auto">
+      <h2 class="asrar-section-title" style="margin-bottom:1.5rem">{{ _('Product Details') }}</h2>
+      <div style="font-size:0.9375rem;line-height:1.85;color:var(--muted-foreground)">
+        {{ product.description | safe }}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# Reviews #}
+{% if store.settings.products.reviews_enabled %}
+  <div class="asrar-section" style="border-top:1px solid var(--border)">
+    <div class="asrar-container" style="max-width:900px;margin-inline:auto">
+      <h2 class="asrar-section-title" style="margin-bottom:2rem">{{ _('Reviews') }}</h2>
+      {% if product.reviews %}
+        <div style="display:flex;flex-direction:column;gap:1.5rem">
+          {% for review in product.reviews %}
+            <div style="padding:1.25rem;background:var(--background-elevated);border:1px solid var(--border);border-radius:var(--radius-md)">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem">
+                <div>
+                  <p style="font-weight:500;font-size:0.875rem;margin:0 0 0.25rem">{{ review.customer_name }}</p>
+                  <div style="color:var(--gold)">
+                    {% for i in range(review.rating | int) %}★{% endfor %}
+                  </div>
+                </div>
+                <span style="font-size:0.75rem;color:var(--muted)">{{ review.created_at }}</span>
+              </div>
+              <p style="font-size:0.875rem;color:var(--muted-foreground);margin:0;line-height:1.7">{{ review.body }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p style="color:var(--muted-foreground);font-size:0.9rem">{{ _('No reviews yet.') }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% endblock %}

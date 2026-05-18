@@ -1,0 +1,62 @@
+{% set is_lazy = settings.order > 2 %}
+<section section-id="{{ sectionId }}" class="asrar-section">
+  <div class="asrar-container">
+
+    <div class="asrar-section-header">
+      <div>
+        {% if settings.title %}
+          <h2 class="asrar-section-title">{{ settings.title }}</h2>
+          <span class="asrar-section-ornament"></span>
+        {% endif %}
+      </div>
+      {% if settings.display_more %}
+        <a href="{{ url_for('list_categories') }}" class="asrar-section-link">
+          {{ settings.more_text | default(_('View All')) }}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="rtl:rotate-180">
+            <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="asrar-categories-grid">
+      {% for categoryItem in safeget(settings, 'categories', []) %}
+        <a
+          href="/categories/{{ categoryItem.category.id }}/{{ categoryItem.category.slug }}"
+          class="asrar-category-card"
+        >
+          {% if categoryItem.category.image %}
+            <img
+              src="{{ image_url(categoryItem.category.image_full_size, w=600, q=85, f='auto') }}"
+              alt="{{ categoryItem.category.name }}"
+              class="asrar-category-img"
+              {% if is_lazy or not loop.first %}loading="lazy"{% else %}fetchpriority="high"{% endif %}
+            />
+          {% else %}
+            <div class="asrar-category-img" style="background:var(--background-surface)"></div>
+          {% endif %}
+          <div class="asrar-category-overlay"></div>
+          <div class="asrar-category-content">
+            <div class="asrar-category-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.25"/>
+                <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="asrar-category-name">{{ categoryItem.category.name }}</span>
+            {% if categoryItem.description %}
+              <span class="asrar-category-desc">{{ categoryItem.description }}</span>
+            {% endif %}
+            <span class="asrar-category-cta">
+              {{ _('Browse') }}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="rtl:rotate-180">
+                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>

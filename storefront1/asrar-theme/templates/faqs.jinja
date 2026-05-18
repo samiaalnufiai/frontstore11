@@ -1,0 +1,36 @@
+{% extends "layout.jinja" %}
+{% block content %}
+
+<div style="background:var(--background-elevated);border-bottom:1px solid var(--border);padding:2.5rem 1.25rem 2rem">
+  <div class="asrar-container" style="max-width:760px;margin-inline:auto">
+    <h1 style="font-family:var(--font-display);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:400;color:var(--foreground);margin:0">{{ _('Frequently Asked Questions') }}</h1>
+  </div>
+</div>
+
+<div class="asrar-section">
+  <div class="asrar-container" style="max-width:760px;margin-inline:auto">
+    {% if faqs and faqs.results %}
+      <div style="display:flex;flex-direction:column;gap:0.5rem">
+        {% for faq in faqs.results %}
+          <details style="background:var(--background-elevated);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden" open="{{ 'true' if loop.first }}">
+            <summary style="padding:1.125rem 1.25rem;cursor:pointer;font-size:0.9375rem;font-weight:500;color:var(--foreground);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;user-select:none">
+              {{ faq.question }}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;transition:transform 0.2s">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            <div style="padding:0 1.25rem 1.125rem;font-size:0.875rem;line-height:1.8;color:var(--muted-foreground)">
+              {{ faq.answer | safe }}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="asrar-empty">
+        <p class="asrar-empty-desc">{{ _('No FAQs available yet.') }}</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

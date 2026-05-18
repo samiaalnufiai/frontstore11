@@ -1,0 +1,153 @@
+{# Global Product Card Settings #}
+{% set card_columns_desktop = settings.product_card_columns_desktop | default('4') %}
+{% set card_columns_mobile = settings.product_card_columns_mobile | default('2') %}
+{% set card_image_aspect_ratio = settings.product_card_image_aspect_ratio | default('adapt') %}
+
+<!DOCTYPE html>
+<html
+  class="no-js"
+  lang="{{ session.lang }}"
+  dir="{{ session.locale.language.direction }}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    {% vitrin_head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.onload=null;this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Tajawal:wght@300;400;500;700&display=swap"
+    />
+    <!-- prettier-ignore-start -->
+    <style>
+      :root {
+        /* Typography */
+        --font-display: 'Cormorant Garamond', 'Tajawal', serif;
+        --font-body: 'Tajawal', 'Cormorant Garamond', sans-serif;
+        --font-family: 'Tajawal', sans-serif;
+
+        /* Core Palette — Obsidian Luxury */
+        --background: {{ settings.theme_background | default('#0D0B0F') }};
+        --background-elevated: {{ settings.theme_background_elevated | default('#141118') }};
+        --background-surface: {{ settings.theme_background_surface | default('#1A1622') }};
+        --foreground: {{ settings.theme_foreground | default('#F5F0EA') }};
+        --foreground-muted: {{ settings.theme_foreground_muted | default('#A89C90') }};
+
+        /* Primary — Pure White for Typography */
+        --primary: {{ settings.theme_primary | default('#F5F0EA') }};
+        --primary-foreground: {{ settings.theme_primary_foreground | default('#0D0B0F') }};
+
+        /* Secondary */
+        --secondary: {{ settings.theme_secondary | default('#1A1622') }};
+        --secondary-foreground: {{ settings.theme_secondary_foreground | default('#F5F0EA') }};
+
+        /* Gold Accent — Reserved for focal points */
+        --gold: #D4AF37;
+        --gold-muted: rgba(212, 175, 55, 0.15);
+        --gold-border: rgba(212, 175, 55, 0.3);
+
+        /* Utility */
+        --muted: {{ settings.theme_muted | default('#6B6070') }};
+        --muted-foreground: {{ settings.theme_muted_foreground | default('#A89C90') }};
+        --accent: {{ settings.theme_accent | default('#2A2232') }};
+        --border: {{ settings.theme_border | default('rgba(245, 240, 234, 0.08)') }};
+        --border-light: {{ settings.theme_border_light | default('rgba(245, 240, 234, 0.06)') }};
+        --input: rgba(245, 240, 234, 0.06);
+        --ring: #D4AF37;
+
+        /* System */
+        --destructive: #C44B4B;
+        --destructive-foreground: #F5F0EA;
+        --success: #4A7C59;
+        --success-foreground: #F5F0EA;
+        --warning: #B5841A;
+        --warning-foreground: #F5F0EA;
+
+        /* Radius */
+        --radius: {{ settings.theme_radius | default(2) }}px;
+        --radius-sm: calc(var(--radius) * 1);
+        --radius-md: calc(var(--radius) * 2);
+        --radius-lg: calc(var(--radius) * 4);
+
+        /* Cols */
+        --cols-mobile: {{ card_columns_mobile }};
+        --cols-desktop: {{ card_columns_desktop }};
+
+        /* Blur */
+        --blur-glass: blur(20px) saturate(160%);
+      }
+    </style>
+    <!-- prettier-ignore-end -->
+    <link rel="stylesheet" type="text/css" href="{{ 'styles.css' | asset_url }}" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1.0.22" type="module"></script>
+    {% if user_custom_css %}
+      <link rel="stylesheet" href="{{ user_custom_css }}" />
+    {% endif %}
+  </head>
+  <body
+    data-template="{{ session.template }}"
+    class="min-h-dvh antialiased bg-[var(--background)] text-[var(--foreground)]"
+  >
+    {% include 'header.jinja' %}
+    <main id="main">{% block content %}{% endblock %}</main>
+    {% include 'footer.jinja' %}
+    {% include "vitrin:shared/region_settings_dialog.jinja" %}
+    {% include 'components/products/notify-me-dialog.jinja' %}
+    {% include 'components/products/quick-view-modal.jinja' %}
+    <script>
+      window.zidOpenRegionSettingDialog = () => {
+        region_settings_dialog?.open();
+      };
+    </script>
+    <!-- prettier-ignore-start -->
+    <script>
+      window.layoutConfig = { profileUrl: "{{ url_for('profile') }}" };
+      window.productTranslations = {
+        discount: "{{ _('Discount') }}",
+        remaining: "{{ _('Remaining %s only') }}",
+        sold: "{{ _('Sold more than %s times') }}"
+      };
+      window.storeLowStockEnabled = {{ 'true' if store.settings.products.low_stock_enabled else 'false' }};
+      window.storeLowStockThreshold = {{ store.settings.products.low_stock_threshold | default(5) }};
+      window.notifyMeTranslations = {
+        success: "{{ _('You will be notified when this product is back in stock!') }}",
+        error: "{{ _('Failed to submit. Please try again.') }}",
+        required: "{{ _('Please fill in all required fields') }}",
+        phoneRequired: "{{ _('Phone number is required') }}",
+        phoneTooShort: "{{ _('Phone number is too short') }}",
+        phoneTooLong: "{{ _('Phone number is too long') }}",
+        phoneInvalid: "{{ _('Invalid phone number') }}"
+      };
+      window.zidCustomStyles = {
+        bundle_selection: { fontFamily: "var(--font-body)", fontSize: "14px" },
+        gift_dialog: {
+          fontFamily: "var(--font-body)", fontSize: "14px",
+          primaryColor: "var(--gold)", primaryForeground: "var(--primary-foreground)",
+          backgroundColor: "var(--background-elevated)", borderRadius: "var(--radius-md)"
+        },
+        region_settings_dialog: {
+          fontFamily: "var(--font-body)", fontSize: "14px",
+          primaryColor: "var(--gold)", primaryForeground: "var(--primary-foreground)",
+          backgroundColor: "var(--background-elevated)", borderRadius: "var(--radius-md)"
+        }
+      };
+    </script>
+    <!-- prettier-ignore-end -->
+    <script defer src="{{ 'dist/theme.js' | asset_url }}"></script>
+    {% vitrin_body %}
+    {% if session.template not in ['product_details', 'cart_page', 'page_details'] and store.settings.checkout.is_loyalty_enabled %}
+      <script>
+        var loyalty_button_direction = "{{ session.locale.language.direction }}";
+        var text_loyalty_rewards = '{{ _("Rewards") }}';
+        var text_loyalty_options = '{{ _("For {points} get a discount {percentage}") }}';
+        var store_currency_code = "{{ session.currency }}";
+      </script>
+      <script src="{{ 'js/layout-loyalty.js' | asset_url }}"></script>
+    {% endif %}
+    {% block footer_scripts %}{% endblock %}
+  </body>
+</html>

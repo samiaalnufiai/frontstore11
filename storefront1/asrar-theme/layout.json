@@ -1,0 +1,65 @@
+{
+  "sections": [
+    {
+      "id": "hero-main",
+      "template": "sections/hero.jinja",
+      "settings": {
+        "is_primary_hero": true,
+        "badge_text": "عالم أسرار العناية",
+        "heading": "بعض الوصفات لا تُورث ... بل تُختار من يفهمها",
+        "description": "خلطات طبيعية، ملفات رقمية مُعتنى بها. من تجربة، وملاحظة، وفهم عميق لاحتياجات الشعر والبشرة والجسم. لك وحدك، وفي وقتك، وبأسلوبك.",
+        "button_text": "اكتشفي الملفات",
+        "min_height_mobile": 700,
+        "min_height_desktop": 760
+      }
+    },
+    {
+      "id": "trust-bar-main",
+      "template": "sections/trust-bar.jinja",
+      "settings": {}
+    },
+    {
+      "id": "categories-main",
+      "template": "sections/categories.jinja",
+      "settings": {
+        "title": "اختاري ما يناسبك",
+        "display_more": true,
+        "more_text": "كل المجموعات"
+      }
+    },
+    {
+      "id": "products-featured",
+      "template": "sections/products.jinja",
+      "settings": {
+        "title": "ملفات مميزة",
+        "display_more": true,
+        "more_text": "تصفح الملفات"
+      }
+    },
+    {
+      "id": "feature-split-main",
+      "template": "sections/feature-split.jinja",
+      "settings": {
+        "eyebrow": "عالمنا",
+        "heading": "كل ملف... قصة، وفهم، وتركيبة مدروسة",
+        "description": "نؤمن أن العناية الحقيقية تبدأ بالفهم لا بالتقليد. كل ملف نقدمه مبني على تجربة حقيقية، وملاحظة دقيقة، واختيار مكونات تناسب طبيعتك أنتِ.",
+        "features": "مكونات طبيعية وآمنة\nجرعات واضحة وسهلة\nنتائج واقعية من التراكم\nمناسبة لطبيعتك وظروفك",
+        "button_text": "اعرفي أكثر عن عالمنا",
+        "image_position": "left"
+      }
+    },
+    {
+      "id": "values-bar-main",
+      "template": "sections/values-bar.jinja",
+      "settings": {}
+    }
+  ],
+  "order": [
+    "hero-main",
+    "trust-bar-main",
+    "categories-main",
+    "products-featured",
+    "feature-split-main",
+    "values-bar-main"
+  ]
+}

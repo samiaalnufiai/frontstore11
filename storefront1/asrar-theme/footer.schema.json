@@ -1,0 +1,62 @@
+{
+  "icon": "fa fa-minus-square",
+  "name": { "ar": "أسفل الصفحة", "en": "Footer" },
+  "groups": [
+    {
+      "id": "about_us",
+      "icon": "fa fa-info-circle",
+      "name": { "ar": "نبذة عنا", "en": "About Us" },
+      "settings": [
+        {
+          "id": "about_us",
+          "type": "textarea",
+          "label": { "ar": "نص نبذة عنا", "en": "About Us Text" },
+          "default": "خلطات مختارة بعناية. من تجربة، وفهم عميق لاحتياجاتك."
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "icon": "fa fa-image",
+      "name": { "ar": "الشعار", "en": "Logo" },
+      "settings": [
+        { "id": "logo_desktop", "type": "image", "label": { "ar": "الشعار", "en": "Logo" } }
+      ]
+    },
+    {
+      "id": "link_groups",
+      "icon": "fa fa-link",
+      "name": { "ar": "مجموعات الروابط", "en": "Link Groups" },
+      "settings": [
+        {
+          "id": "items",
+          "type": "list",
+          "label": { "ar": "المجموعات", "en": "Groups" },
+          "item_label": { "ar": "مجموعة", "en": "Group" },
+          "settings": [
+            { "id": "title", "type": "text", "label": { "ar": "عنوان المجموعة", "en": "Group Title" } },
+            { "id": "hide", "type": "checkbox", "label": { "ar": "إخفاء", "en": "Hide" }, "default": false },
+            {
+              "id": "links",
+              "type": "list",
+              "label": { "ar": "الروابط", "en": "Links" },
+              "item_label": { "ar": "رابط", "en": "Link" },
+              "settings": [
+                { "id": "title", "type": "text", "label": { "ar": "عنوان الرابط", "en": "Link Title" } },
+                { "id": "url", "type": "url", "label": { "ar": "الرابط", "en": "URL" } }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact_info",
+      "icon": "fa fa-phone",
+      "name": { "ar": "معلومات التواصل", "en": "Contact Info" },
+      "settings": [
+        { "id": "contact_info_title", "type": "text", "label": { "ar": "عنوان قسم التواصل", "en": "Contact Title" }, "default": "تواصل معنا" }
+      ]
+    }
+  ]
+}
